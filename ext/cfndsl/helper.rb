@@ -122,6 +122,31 @@ def get_name(project_name)
   return FnSub("${AWS::StackName}-#{project_name}-project")
 end
 
+
+def get_secondary_artifacts(config)
+  secondary_artifacts = config['secondary_artifacts']
+  artifacts = []
+
+  secondary_artifacts.each do |artifact|
+    artifacts << get_artifacts({'artifacts': artifact})
+  end
+
+  return artifacts
+end
+
+
+def get_secondary_sources(config, project_name)
+  secondary_sources = config['get_secondary_sources']
+  sources = []
+
+  secondary_sources.each do |source|
+    source << get_source(source, project_name)
+  end
+
+  return sources
+end
+
+
 def get_source(config, project_name)
   cfg = config['source']
   type = cfg['type']

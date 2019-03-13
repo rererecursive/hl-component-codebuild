@@ -55,7 +55,18 @@ project:
         resource:
           - '*'
 
-    queue_timeout: 60
+    queue_timeout: '60'
+
+    secondary_artifacts:
+      - type: S3 | CODEBUILD | NO_ARTIFACTS
+        identifier: my_artifact_id
+        override_artifact_name: false
+        name: my_output_folder                # Only when type=S3
+        location: mybucket.base2services.com  # Only when type=S3
+        encryption_disabled: true             # Only when type=S3
+        namespace_type: BUILD_ID | NONE       # Only when type=S3
+        packaging: ZIP | NONE                 # Only when type=S3
+        path: path/to/package.zip             # Only when type=S3
 
     source:
       type: CODECOMMIT | CODEPIPELINE | GITHUB | GITHUB_ENTERPRISE | BITBUCKET | S3 | NO_SOURCE
