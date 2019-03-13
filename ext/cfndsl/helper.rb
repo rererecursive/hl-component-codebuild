@@ -119,7 +119,7 @@ end
 
 
 def get_name(project_name)
-  return FnSub("${AWS::StackName}-#{project_name}-project")
+  return FnSub("${AWS::StackName}-#{project_name}")
 end
 
 
@@ -156,7 +156,7 @@ def get_source(config, project_name)
     InsecureSsl:        cfg['insecure_ssl'],
     Location:           (cfg['location'] if type != 'CODEPIPELINE'),
     ReportBuildStatus:  cfg['report_build_status'],
-    SourceIdentifier:   FnSub("${AWS::StackName}-#{project_name}-source"),
+    SourceIdentifier:   "#{project_name}_source".gsub("-", "_"),
     Type:               type
   }
 
@@ -171,7 +171,7 @@ def get_source(config, project_name)
     file = cfg['buildspec']['file'] || 'buildspec.yml'
 
     if cfg['buildspec']['inline']
-      source[:BuildSpec] = File.read(File.join(Dir.pwd, "#{file}")).gsub("\n", "\\n")
+      source[:BuildSpec] = File.read(File.join(Dir.pwd, "#{file}"))
     else
       source[:BuildSpec] = file
     end
