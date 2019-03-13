@@ -110,8 +110,8 @@ def get_logs_config(config)
         Status: logs['cloudwatch']['status']
       }
     }
-    cfg[:S3Logs][:GroupName] = logs['cloudwatch']['group'] if logs['cloudwatch']['group']
-    cfg[:S3Logs][:StreamName] = logs['cloudwatch']['stream'] if logs['cloudwatch']['stream']
+    cfg[:CloudWatchLogs][:GroupName] = logs['cloudwatch']['group'] if logs['cloudwatch']['group']
+    cfg[:CloudWatchLogs][:StreamName] = logs['cloudwatch']['stream'] if logs['cloudwatch']['stream']
   end
 
   return cfg
