@@ -1,0 +1,24 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - mkdir -p $EFS_DIRECTORY
+      - apt-get update && apt-get install -y nfs-common tree
+  pre_build:
+    commands:
+      - mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 $EFS_DNS:/ $EFS_DIRECTORY
+      - df -h
+      - tree -vrL 2 $EFS_DIRECTORY
+  # build:
+  #   commands:
+  #     - cp -r /$PROJECT_NAME /$EFS_DIRECTORY/$PROJECT_NAME/$PROJECT_VERSION
+  # post_build:
+  #   commands:
+  #     - tree -vrL 2 $EFS_DIRECTORY
+  #     - |
+  #       if [[ $(ls /$EFS_DIRECTORY/$PROJECT_NAME | wc) -gt $DEPLOYMENTS_TO_KEEP ]]; then
+  #         echo "Removing directory: $(ls -1v | head -n 1)"
+  #         ls -1v | head -n 1 | xargs -I {} rm -rf {}
+  #         tree -vrL 2 $EFS_DIRECTORY
+  #       fi

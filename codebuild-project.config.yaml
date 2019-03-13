@@ -1,0 +1,91 @@
+
+project:
+  MyProject:
+    badge_enabled: false
+
+    cache:
+      type: NO_CACHE | LOCAL | S3
+      location: path/to/package.zip # Only when type=S3
+      modes:
+        - LOCAL_SOURCE_CACHE | LOCAL_DOCKER_LAYER_CACHE | LOCAL_CUSTOM_CACHE # Only when location=LOCAL
+
+    description: my_project
+
+    artifacts:
+      type: S3 | CODEBUILD | NO_ARTIFACTS
+      identifier: my_artifact_id
+      override_artifact_name: false
+      name: my_output_folder                # Only when type=S3
+      location: mybucket.base2services.com  # Only when type=S3
+      encryption_disabled: true             # Only when type=S3
+      namespace_type: BUILD_ID | NONE       # Only when type=S3
+      packaging: ZIP | NONE                 # Only when type=S3
+      path: path/to/package.zip             # Only when type=S3
+
+    environment:
+      certificate: ''
+      compute_type: BUILD_GENERAL1_SMALL |  BUILD_GENERAL1_MEDIUM |  BUILD_GENERAL1_LARGE
+      image: ubuntu:latest
+      image_creds_type: SERVICE_ROLE | CODEBUILD
+      privileged: false
+      registry_creds:
+        credential: my_creds
+        provider: SECRETS_MANAGER
+      type: LINUX_CONTAINER | WINDOWS_CONTAINER
+      variables:
+        - name: Environment
+          value: prod
+        - name: TemporaryPassword
+          value: NewValue
+          type: PARAMETER_STORE | PLAINTEXT
+
+    logs:
+      s3:
+        status: ENABLED | DISABLED
+        location: mybucket.base2services.com/logs
+      cloudwatch:
+        status: ENABLED | DISABLED
+        group: my_group
+        stream: my_stream
+
+    policies:
+      codebuild:
+        action:
+          - codebuild:*
+        resource:
+          - '*'
+
+    queue_timeout: 60
+
+    source:
+      type: CODECOMMIT | CODEPIPELINE | GITHUB | GITHUB_ENTERPRISE | BITBUCKET | S3 | NO_SOURCE
+      location: CODECOMMIT | CODEPIPELINE | GITHUB | GITHUB_ENTERPRISE | BITBUCKET | S3 | NO_SOURCE
+      auth:
+        resource: my_resource     # Only when type=[GITHUB | GITHUB_ENTERPRISE]
+      buildspec:
+        path: my_buildspec.yml
+        inline: true
+      git_clone_depth: 0
+      insecure_ssl: false
+      report_build_status: false  # Only when type=[GITHUB | GITHUB_ENTERPRISE]
+
+    tags:
+      env: dev
+      type: staging
+
+    triggers:
+      webhook: true
+      filters:
+        - pattern: (develop|master)
+          exclude_pattern: feature/.*
+          type: EVENT | ACTOR_ACCOUNT_ID | HEAD_REF | BASE_REF | FILE_PATH
+
+    vpc_config:
+      security_groups:
+        - sg-1234
+        - sg-7890
+      subnets:
+        - subnet-1234
+        - subnet7890
+      vpc:
+        - vpc-12345
