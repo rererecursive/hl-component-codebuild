@@ -1,5 +1,7 @@
 CloudFormation do
 
+
+
   AWSTemplateFormatVersion "2010-09-09"
   Description "#{component_name} - #{component_version}"
 

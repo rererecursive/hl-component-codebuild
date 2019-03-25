@@ -1,6 +1,6 @@
 CfhighlanderTemplate do
-  Name 'codebuild-project'
-  Description "codebuild-project - #{component_version}"
+  Name 'codebuild'
+  Description "codebuild - #{component_version}"
 
   Parameters do
     ComponentParam 'EnvironmentName', 'dev', isGlobal: true

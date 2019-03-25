@@ -85,7 +85,7 @@ def get_environment(config)
     }
     var[:Type] = item['type'] if item['type']
     variables << var
-  end
+  end if env['variables']
 
   environment[:EnvironmentVariables] = variables
 
