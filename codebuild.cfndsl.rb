@@ -41,6 +41,10 @@ CloudFormation do
       Property('Path', '/')
       Property('Policies', get_policies(config)) if config.key?('policies')
     }
+
+    Output("Project") {
+      Value(Ref("#{project_name}Project"))
+    }
   end
 
 end
