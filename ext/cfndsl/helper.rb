@@ -13,7 +13,7 @@ def get_artifacts(config)
   }
 
   if config.key?('artifacts')
-    config['artifacts'] do |a|
+    config['artifacts'].each do |a|
       type = a['type']
 
       artifacts[:Type] = type
@@ -118,8 +118,8 @@ def get_logs_config(config)
 end
 
 
-def get_name(project_name)
-  return FnSub("${AWS::StackName}-#{project_name}")
+def get_name(config)
+  return config['name']
 end
 
 

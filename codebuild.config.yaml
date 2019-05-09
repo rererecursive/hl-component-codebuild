@@ -1,6 +1,7 @@
 
 # project:
 #   MyProject:
+#     name: my-project
 #     badge_enabled: false
 
 #     cache:

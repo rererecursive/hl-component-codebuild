@@ -17,7 +17,7 @@ CloudFormation do
       Property('EncryptionKey', config['encryption_key']) if config.key?('encryption_key')
       Property('Environment',   get_environment(config))
       Property('LogsConfig',    get_logs_config(config))  if config.key?('logs')
-      Property('Name',          get_name(project_name))
+      Property('Name',          get_name(config))
       Property('QueuedTimeoutInMinutes',  config['queued_timeout']) if config.key?('queued_timeout')
       Property('SecondaryArtifacts',      get_secondary_artifacts(config)) if config.key?('secondary_artifacts')
       Property('SecondarySources',        get_secondary_sources(config, project_name)) if config.key?('secondary_sources')
